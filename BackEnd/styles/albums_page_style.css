@@ -1,0 +1,21 @@
+#album_element {
+  width: 200px;
+  margin-top: 50px;
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+#album_element img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+#album_element p {
+  font-size: 23px;
+  width: 200px;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
