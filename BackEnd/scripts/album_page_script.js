@@ -1,4 +1,4 @@
-var base_url = "http://127.0.0.1:8000/";
+var base_url = "http://130.185.234.70:3339/";
 window.onload = async function () {
   albumData = window.sessionStorage.getItem("album");
   const fileSelector = document.getElementById("addFileInput");

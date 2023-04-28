@@ -1,3 +1,6 @@
+import eyed3
+import tempfile
+import io
 import os
 from fastapi import  UploadFile, APIRouter, HTTPException
 from fastapi.responses import FileResponse
@@ -41,6 +44,20 @@ def get_song(song: str):
             return FileResponse(os.getcwd()+"/Collabs/"+file)
     return HTTPException(status_code=404, detail="Song not found") 
 
+@router.get("/cover/{song}")  # , dependencies=[Depends(api_key_auth)])
+async def get_song_cover(song: str):
+    for file in os.listdir(os.getcwd()+"/Collabs"):
+        if file.split("~")[1] == song:
+            audio = eyed3.load(os.getcwd()+"/Collabs/"+file)
+            if audio is not None and audio.tag is not None:
+                if audio.tag and audio.tag.images:
+                    image_data = audio.tag.images[0].image_data
+                    image = io.BytesIO(image_data)
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as f:
+                          f.write(image.getvalue())
+                          temp_file_path = f.name
+                          return FileResponse(temp_file_path, media_type="image/jpeg",  filename="image.png")
+    return HTTPException(status_code=404, detail="Song not found")
 
 def get_songs_json():
     songs = []
