@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../components/custom_cache_image.dart';
 import '../../../../constant/colors.dart';
+import '../../../../constant/values.dart';
 import '../../../loading_feature/domain/entities/song.dart';
 
 class DopeBeatWidget extends StatelessWidget {
@@ -18,17 +20,22 @@ class DopeBeatWidget extends StatelessWidget {
         height: 60,
         margin: const EdgeInsets.fromLTRB(5, 0, 5, 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(50),
           color: kElementColor,
         ),
         child: Row(
           children: [
-            Container(
+            SizedBox(
               height: 60,
               width: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(50),
+                  topLeft: Radius.circular(50),
+                ),
+                child: CustomCachedImage(
+                  url: "$baseUrl/beats_for_placement/cover/${beat.toJson()}",
+                ),
               ),
             ),
             const SizedBox(width: 10),

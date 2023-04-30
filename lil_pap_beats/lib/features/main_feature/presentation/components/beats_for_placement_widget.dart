@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lil_pap_beats/components/custom_cache_image.dart';
+import 'package:lil_pap_beats/constant/values.dart';
 
 import '../../../../constant/colors.dart';
 import '../../../loading_feature/domain/entities/song.dart';
@@ -29,9 +31,11 @@ class BeatForPlacementWidget extends StatelessWidget {
             height: 55,
             width: 55,
             margin: const EdgeInsets.all(7.5),
-            decoration: BoxDecoration(
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
-              color: Colors.grey,
+              child: CustomCachedImage(
+                url: "$baseUrl/beats_for_placement/cover/${beat.toJson()}",
+              ),
             ),
           ),
           const SizedBox(width: 10),

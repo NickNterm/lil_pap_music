@@ -7,6 +7,7 @@ import 'package:lil_pap_beats/constant/colors.dart';
 import 'package:lil_pap_beats/features/loading_feature/presentation/bloc/albums/albums_bloc.dart';
 import 'package:lil_pap_beats/features/loading_feature/presentation/bloc/collaborations/collaborations_bloc.dart';
 import 'package:lil_pap_beats/features/loading_feature/presentation/cubit/show_intro/show_intro_cubit.dart';
+import 'package:lil_pap_beats/features/main_feature/presentation/bloc/player/player_bloc.dart';
 
 import '../../../../core/functions/functions.dart';
 import '../../../../dependency_injection.dart';
@@ -53,6 +54,7 @@ class _LoadingPageState extends State<LoadingPage>
       sl<CollaborationsBloc>().add(GetCollaborationsEvent());
       sl<BeatsForPlacementBloc>().add(GetBeatsForPlacementEvent());
       sl<ShowIntroCubit>().getShowIntro();
+      sl<PlayerBloc>().add(PlayerEventLoad());
     });
 
     albumListener = sl<AlbumsBloc>().stream.listen((state) {

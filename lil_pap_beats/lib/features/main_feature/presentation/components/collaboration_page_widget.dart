@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../../../constant/colors.dart';
+import '../../../../dependency_injection.dart';
 import '../../../loading_feature/domain/entities/collaboration.dart';
+import '../cubit/main_page_index/main_page_index_cubit.dart';
 import 'collaboration_widget.dart';
 
 class CollaborationPageWidget extends StatelessWidget {
@@ -31,6 +33,9 @@ class CollaborationPageWidget extends StatelessWidget {
               ),
               const Spacer(),
               GestureDetector(
+                onTap: () {
+                  sl<MainPageIndexCubit>().changeIndex(3);
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 15,

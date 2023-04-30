@@ -1,11 +1,11 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:lil_pap_beats/constant/colors.dart';
 import 'package:lil_pap_beats/features/main_feature/presentation/page/albums_page.dart';
 
+import '../../../../dependency_injection.dart';
+import '../components/navigation_button_widget.dart';
+import '../cubit/main_page_index/main_page_index_cubit.dart';
 import 'beats_for_placement_page.dart';
 import 'collabs_page.dart';
 import 'home_page.dart';
@@ -24,7 +24,19 @@ class _MainPageState extends State<MainPage> {
     const BeatsForPlacementPage(),
     const CollabsPage(),
   ];
-  int currentIndex = 0;
+  PageController controller = PageController();
+  @override
+  initState() {
+    super.initState();
+    controller = PageController(initialPage: sl<MainPageIndexCubit>().state);
+    sl<MainPageIndexCubit>().stream.listen((index) {
+      controller.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +44,11 @@ class _MainPageState extends State<MainPage> {
       body: SafeArea(
         child: Stack(
           children: [
-            pages[currentIndex],
+            PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: controller,
+              children: pages,
+            ),
             Positioned(
               bottom: 0,
               left: 0,
@@ -44,7 +60,6 @@ class _MainPageState extends State<MainPage> {
                     colors: [
                       Colors.black.withOpacity(1),
                       Colors.black.withOpacity(0.7),
-                      Colors.black.withOpacity(0.3),
                       Colors.black.withOpacity(0.0),
                     ],
                     begin: Alignment.bottomCenter,
@@ -53,114 +68,26 @@ class _MainPageState extends State<MainPage> {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            FeatherIcons.home,
-                            color: currentIndex == 0
-                                ? kPrimaryColor
-                                : Colors.white,
-                            size: 30,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              currentIndex = 0;
-                            });
-                          },
-                        ),
-                        Visibility(
-                          visible: currentIndex == 0,
-                          child: const Text(
-                            "Home",
-                            style: TextStyle(
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
+                  children: const [
+                    NavigationButton(
+                      icon: FeatherIcons.home,
+                      label: "Home",
+                      index: 0,
                     ),
-                    Column(
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            FeatherIcons.disc,
-                            color: currentIndex == 1
-                                ? kPrimaryColor
-                                : Colors.white,
-                            size: 30,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              currentIndex = 1;
-                            });
-                          },
-                        ),
-                        Visibility(
-                          visible: currentIndex == 1,
-                          child: const Text(
-                            "Albums",
-                            style: TextStyle(
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
+                    NavigationButton(
+                      icon: FeatherIcons.disc,
+                      label: "Home",
+                      index: 1,
                     ),
-                    Column(
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            FeatherIcons.headphones,
-                            color: currentIndex == 2
-                                ? kPrimaryColor
-                                : Colors.white,
-                            size: 30,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              currentIndex = 2;
-                            });
-                          },
-                        ),
-                        Visibility(
-                          visible: currentIndex == 2,
-                          child: const Text(
-                            "BFP",
-                            style: TextStyle(
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
+                    NavigationButton(
+                      icon: FeatherIcons.headphones,
+                      label: "BFP",
+                      index: 2,
                     ),
-                    Column(
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            FeatherIcons.user,
-                            color: currentIndex == 3
-                                ? kPrimaryColor
-                                : Colors.white,
-                            size: 30,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              currentIndex = 3;
-                            });
-                          },
-                        ),
-                        Visibility(
-                          visible: currentIndex == 3,
-                          child: const Text(
-                            "Collabs",
-                            style: TextStyle(
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
+                    NavigationButton(
+                      icon: FeatherIcons.user,
+                      label: "Collabs",
+                      index: 3,
                     ),
                   ],
                 ),

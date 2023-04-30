@@ -11,6 +11,7 @@ import 'features/loading_feature/presentation/bloc/albums/albums_bloc.dart';
 import 'features/loading_feature/presentation/bloc/collaborations/collaborations_bloc.dart';
 import 'features/loading_feature/presentation/cubit/show_intro/show_intro_cubit.dart';
 import 'features/loading_feature/presentation/page/loading_page.dart';
+import 'features/main_feature/presentation/cubit/main_page_index/main_page_index_cubit.dart';
 import 'features/main_feature/presentation/page/main_page.dart';
 
 void main() async {
@@ -35,12 +36,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<BeatsForPlacementBloc>()),
         BlocProvider(create: (context) => sl<CollaborationsBloc>()),
         BlocProvider(create: (context) => sl<ShowIntroCubit>()),
+        BlocProvider(create: (context) => sl<MainPageIndexCubit>()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           useMaterial3: true,
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.red,
+          brightness: Brightness.dark,
           scaffoldBackgroundColor: kBackgroundColor,
           fontFamily: GoogleFonts.ubuntu().fontFamily,
           textTheme: ThemeData.light().textTheme.apply(

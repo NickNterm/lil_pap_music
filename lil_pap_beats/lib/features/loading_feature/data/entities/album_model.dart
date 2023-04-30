@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:lil_pap_beats/features/loading_feature/data/entities/song_model.dart';
 
 import '../../domain/entities/album.dart';
@@ -7,9 +9,11 @@ class AlbumModel extends Album {
   const AlbumModel({
     required String title,
     required List<Song> songs,
+    required Color dominantColor,
   }) : super(
           title: title,
           songs: songs,
+          dominantColor: dominantColor,
         );
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) {
@@ -21,6 +25,7 @@ class AlbumModel extends Album {
     return AlbumModel(
       title: json['title'],
       songs: listSongs,
+      dominantColor: Color(json['dominantColor']),
     );
   }
 }

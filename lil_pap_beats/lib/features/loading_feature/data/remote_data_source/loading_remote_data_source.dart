@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:lil_pap_beats/constant/values.dart';
 
 import '../../../../core/exceptions/exception.dart';
+import '../../../../core/functions/functions.dart';
 import '../../domain/entities/album.dart';
 import '../../domain/entities/collaboration.dart';
 import '../../domain/entities/song.dart';
@@ -31,6 +34,14 @@ class LoadingRemoteDataSourceImpl extends LoadingRemoteDataSource {
       data = data["Albums"];
       List<Album> albums = [];
       for (var album in data) {
+        Color color = await getImagePalette(
+          CachedNetworkImageProvider(
+            "$baseUrl/albums/cover/${album["title"]}",
+          ),
+        );
+        print("Title: ${album["title"]}");
+        print("Color: $color");
+        album["dominantColor"] = color.value;
         albums.add(AlbumModel.fromJson(album));
       }
       return albums;

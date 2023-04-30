@@ -17,6 +17,10 @@ import 'features/loading_feature/domain/use_cases/set_show_intro_use_case.dart';
 import 'features/loading_feature/presentation/bloc/albums/albums_bloc.dart';
 import 'features/loading_feature/presentation/bloc/beats_for_placement/beats_for_placement_bloc.dart';
 import 'features/loading_feature/presentation/bloc/collaborations/collaborations_bloc.dart';
+import 'features/main_feature/domain/use_case/get_player_data_use_case.dart';
+import 'features/main_feature/domain/use_case/set_player_data_use_case.dart';
+import 'features/main_feature/presentation/bloc/player/player_bloc.dart';
+import 'features/main_feature/presentation/cubit/main_page_index/main_page_index_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -26,6 +30,13 @@ Future<void> init() async {
   sl.registerLazySingleton<AlbumsBloc>(
     () => AlbumsBloc(
       getAlbumsUseCase: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<PlayerBloc>(
+    () => PlayerBloc(
+      getPlayerDataUseCase: sl(),
+      setPlayerDataUseCase: sl(),
     ),
   );
 
@@ -47,6 +58,10 @@ Future<void> init() async {
       getShowIntroUseCase: sl(),
       setShowIntroUseCase: sl(),
     ),
+  );
+
+  sl.registerLazySingleton<MainPageIndexCubit>(
+    () => MainPageIndexCubit(),
   );
 
   // Repository
@@ -74,6 +89,14 @@ Future<void> init() async {
   // Use cases
   sl.registerLazySingleton<GetAlbumsUseCase>(
     () => GetAlbumsUseCase(sl()),
+  );
+
+  sl.registerLazySingleton<GetPlayerDataUseCase>(
+    () => GetPlayerDataUseCase(sl()),
+  );
+
+  sl.registerLazySingleton<SetPlayerDataUseCase>(
+    () => SetPlayerDataUseCase(sl()),
   );
 
   sl.registerLazySingleton<GetBeatsForPlacementUseCase>(

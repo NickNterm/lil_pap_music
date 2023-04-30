@@ -1,11 +1,14 @@
 import 'dart:math';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lil_pap_beats/components/custom_cache_image.dart';
 
 import '../../../../constant/colors.dart';
 import '../../../../constant/values.dart';
+import '../../../../dependency_injection.dart';
+import '../../../album_feature/presentation/page/album_page.dart';
 import '../../../loading_feature/domain/entities/album.dart';
+import '../cubit/main_page_index/main_page_index_cubit.dart';
 
 class AlbumsMainPageWidget extends StatelessWidget {
   const AlbumsMainPageWidget({
@@ -32,6 +35,9 @@ class AlbumsMainPageWidget extends StatelessWidget {
               ),
               const Spacer(),
               GestureDetector(
+                onTap: () {
+                  sl<MainPageIndexCubit>().changeIndex(1);
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 15,
@@ -59,38 +65,48 @@ class AlbumsMainPageWidget extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return Container(
-                width: 150,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: kElementColor,
-                ),
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            "$baseUrl/albums/cover/${albums[index].title}",
-                        fit: BoxFit.cover,
-                        width: 130,
-                        height: 130,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AlbumPage(
+                        album: albums[index],
                       ),
                     ),
-                    const SizedBox(height: 7.5),
-                    Text(
-                      albums[index].title,
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                  );
+                },
+                child: Container(
+                  width: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: kElementColor,
+                  ),
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: CustomCachedImage(
+                          url: "$baseUrl/albums/cover/${albums[index].title}",
+                          width: 130,
+                          height: 130,
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 7.5),
+                      Text(
+                        albums[index].title,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

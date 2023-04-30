@@ -10,7 +10,7 @@ import '../components/collaboration_page_widget.dart';
 import '../components/dopest_beats_main_page_widget.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

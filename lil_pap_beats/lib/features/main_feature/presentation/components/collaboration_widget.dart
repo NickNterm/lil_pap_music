@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../components/custom_cache_image.dart';
 import '../../../../constant/colors.dart';
+import '../../../../constant/values.dart';
 import '../../../loading_feature/domain/entities/collaboration.dart';
 
 class CollaborationWidget extends StatelessWidget {
@@ -29,16 +32,18 @@ class CollaborationWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             height: 70,
             width: 70,
-            decoration: const BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.only(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(10),
+              ),
+              child: CustomCachedImage(
+                url: "$baseUrl/collabs/cover/${collaboration.song.toJson()}",
               ),
             ),
           ),
