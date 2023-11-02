@@ -9,3 +9,10 @@ class PlayerEventUpdate extends PlayerEvent {
 }
 
 class PlayerEventLoad extends PlayerEvent {}
+
+class PlayerEventPlay extends PlayerEvent {
+  PlayerEventPlay(this.song, this.category, this.album);
+  final SongCategory category;
+  final Song song;
+  final String album;
+}

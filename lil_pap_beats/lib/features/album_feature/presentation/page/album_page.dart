@@ -1,11 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lil_pap_beats/constant/colors.dart';
+import 'package:lil_pap_beats/features/main_feature/presentation/bloc/player/player_bloc.dart';
 
 import '../../../../components/custom_cache_image.dart';
 import '../../../../constant/values.dart';
+import '../../../../dependency_injection.dart';
 import '../../../loading_feature/domain/entities/album.dart';
+import '../../../main_feature/domain/entities/song_category.dart';
 
 class AlbumPage extends StatelessWidget {
   final Album album;
@@ -95,22 +99,38 @@ class AlbumPage extends StatelessWidget {
                     itemCount: album.songs.length,
                     itemBuilder: (context, index) {
                       final song = album.songs[index];
-                      return ListTile(
-                        selectedColor: kPrimaryColor,
-                        leading: Text(
-                          (index + 1).toString().padLeft(2, '0'),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
+                      return BlocBuilder<PlayerBloc, PlayerState>(
+                        builder: (context, state) => ListTile(
+                          selectedColor: kPrimaryColor,
+                          selected: index ==
+                                  (state as PlayerLoaded)
+                                      .player
+                                      .audioPlayer
+                                      .currentIndex &&
+                              state.player.album == album.title,
+                          leading: Text(
+                            (index + 1).toString().padLeft(2, '0'),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            ),
                           ),
-                        ),
-                        title: Text(song.title),
-                        onTap: () {},
-                        subtitle: const Text(
-                          "Lil Pap",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
+                          title: Text(song.title),
+                          onTap: () {
+                            sl<PlayerBloc>().add(
+                              PlayerEventPlay(
+                                song,
+                                SongCategory.album,
+                                album.title,
+                              ),
+                            );
+                          },
+                          subtitle: const Text(
+                            "Lil Pap",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                       );

@@ -15,6 +15,7 @@ class PlayerData extends Equatable {
   final int? clippingEnd;
   final bool isShuffling;
   final double stretchingFactor;
+  final String? album;
 
   const PlayerData({
     required this.audioPlayer,
@@ -27,6 +28,7 @@ class PlayerData extends Equatable {
     required this.clippingEnd,
     required this.isShuffling,
     required this.stretchingFactor,
+    required this.album,
   });
 
   copyWith({
@@ -40,6 +42,7 @@ class PlayerData extends Equatable {
     int? clippingEnd,
     bool? isShuffling,
     double? stretchingFactor,
+    String? album,
   }) {
     return PlayerData(
       audioPlayer: audioPlayer ?? this.audioPlayer,
@@ -52,6 +55,7 @@ class PlayerData extends Equatable {
       clippingEnd: clippingEnd ?? this.clippingEnd,
       isShuffling: isShuffling ?? this.isShuffling,
       stretchingFactor: stretchingFactor ?? this.stretchingFactor,
+      album: album ?? this.album,
     );
   }
 
@@ -61,11 +65,12 @@ class PlayerData extends Equatable {
         '"positionInSeconds": $positionInSeconds,'
         '"isLooping": $isLooping,'
         '"songCategory": $songCategory,'
-        '"song": $song,'
+        '"song": ${song.toJson()},'
         '"clippingStart": $clippingStart,'
         '"clippingEnd": $clippingEnd,'
         '"isShuffling": $isShuffling,'
         '"stretchingFactor": $stretchingFactor'
+        '"album": $album'
         '}';
   }
 
@@ -80,5 +85,6 @@ class PlayerData extends Equatable {
         clippingEnd,
         isShuffling,
         stretchingFactor,
+        album,
       ];
 }

@@ -34,6 +34,28 @@ class BeatsForPlacementPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 15),
+            Container(
+              height: 40,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  const SizedBox(width: 10),
+                  const Icon(Icons.search, color: Colors.grey),
+                  const SizedBox(width: 10),
+                  const Text(
+                    "Search",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             BlocBuilder<BeatsForPlacementBloc, BeatsForPlacementState>(
               builder: (context, state) {
                 if (state is BeatsForPlacementLoaded) {

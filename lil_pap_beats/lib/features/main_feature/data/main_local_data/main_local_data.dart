@@ -22,7 +22,30 @@ class MainLocalDataSourceImpl implements MainLocalDataSource {
   Future<PlayerData> getPlayerData() async {
     final jsonString = sharedPreferences.getString(playerDateKey);
     if (jsonString != null) {
-      return Future.value(PlayerDataModel.fromJson(jsonDecode(jsonString)));
+      try {
+        print(jsonDecode(jsonString));
+        return Future.value(PlayerDataModel.fromJson(jsonDecode(jsonString)));
+      } catch (e) {
+        print(e);
+        return Future.value(
+          PlayerData(
+            audioPlayer: AudioPlayer(),
+            isPlaying: false,
+            positionInSeconds: 0,
+            isLooping: false,
+            songCategory: SongCategory.album,
+            song: const Song(
+              title: '',
+              fileType: '',
+            ),
+            clippingStart: 0,
+            clippingEnd: 0,
+            isShuffling: false,
+            stretchingFactor: 0,
+            album: '',
+          ),
+        );
+      }
     } else {
       return Future.value(
         PlayerData(
@@ -39,6 +62,7 @@ class MainLocalDataSourceImpl implements MainLocalDataSource {
           clippingEnd: 0,
           isShuffling: false,
           stretchingFactor: 0,
+          album: '',
         ),
       );
     }

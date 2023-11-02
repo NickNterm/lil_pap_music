@@ -1,9 +1,10 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 import 'package:lil_pap_beats/features/loading_feature/domain/use_cases/get_show_intro_use_case.dart';
 import 'package:lil_pap_beats/features/loading_feature/presentation/cubit/show_intro/show_intro_cubit.dart';
+import 'package:lil_pap_beats/features/main_feature/domain/repository/player_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 import 'core/network_info/network_info.dart';
 import 'features/loading_feature/data/local_data_source/loading_local_data_source.dart';
@@ -17,6 +18,8 @@ import 'features/loading_feature/domain/use_cases/set_show_intro_use_case.dart';
 import 'features/loading_feature/presentation/bloc/albums/albums_bloc.dart';
 import 'features/loading_feature/presentation/bloc/beats_for_placement/beats_for_placement_bloc.dart';
 import 'features/loading_feature/presentation/bloc/collaborations/collaborations_bloc.dart';
+import 'features/main_feature/data/main_local_data/main_local_data.dart';
+import 'features/main_feature/data/repository/player_repository_impl.dart';
 import 'features/main_feature/domain/use_case/get_player_data_use_case.dart';
 import 'features/main_feature/domain/use_case/set_player_data_use_case.dart';
 import 'features/main_feature/presentation/bloc/player/player_bloc.dart';
@@ -72,6 +75,11 @@ Future<void> init() async {
       localDataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<PlayerRepository>(
+    () => PlayerRepositoryImpl(
+      localDataSource: sl(),
+    ),
+  );
 
   // Data sources
   sl.registerLazySingleton<LoadingRemoteDataSource>(
@@ -82,6 +90,12 @@ Future<void> init() async {
 
   sl.registerLazySingleton<LoadingLocalDataSource>(
     () => LoadingLocalDataSourceImpl(
+      sharedPreferences: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<MainLocalDataSource>(
+    () => MainLocalDataSourceImpl(
       sharedPreferences: sl(),
     ),
   );

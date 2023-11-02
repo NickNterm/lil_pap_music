@@ -1,4 +1,5 @@
 import 'package:just_audio/just_audio.dart';
+import 'package:lil_pap_beats/features/loading_feature/data/entities/song_model.dart';
 import 'package:lil_pap_beats/features/main_feature/domain/entities/player_data.dart';
 
 class PlayerDataModel extends PlayerData {
@@ -13,6 +14,7 @@ class PlayerDataModel extends PlayerData {
     required super.clippingEnd,
     required super.isShuffling,
     required super.stretchingFactor,
+    required super.album,
   });
 
   factory PlayerDataModel.fromJson(Map<String, dynamic> json) {
@@ -22,11 +24,12 @@ class PlayerDataModel extends PlayerData {
       positionInSeconds: json['positionInSeconds'],
       isLooping: json['isLooping'],
       songCategory: json['songCategory'],
-      song: json['song'],
+      song: SongModel.fromName(json['song']),
       clippingStart: json['clippingStart'],
       clippingEnd: json['clippingEnd'],
       isShuffling: json['isShuffling'],
       stretchingFactor: json['stretchingFactor'],
+      album: json['album'],
     );
   }
 }

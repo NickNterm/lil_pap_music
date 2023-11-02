@@ -11,6 +11,7 @@ import 'features/loading_feature/presentation/bloc/albums/albums_bloc.dart';
 import 'features/loading_feature/presentation/bloc/collaborations/collaborations_bloc.dart';
 import 'features/loading_feature/presentation/cubit/show_intro/show_intro_cubit.dart';
 import 'features/loading_feature/presentation/page/loading_page.dart';
+import 'features/main_feature/presentation/bloc/player/player_bloc.dart';
 import 'features/main_feature/presentation/cubit/main_page_index/main_page_index_cubit.dart';
 import 'features/main_feature/presentation/page/main_page.dart';
 
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<CollaborationsBloc>()),
         BlocProvider(create: (context) => sl<ShowIntroCubit>()),
         BlocProvider(create: (context) => sl<MainPageIndexCubit>()),
+        BlocProvider(create: (context) => sl<PlayerBloc>()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
